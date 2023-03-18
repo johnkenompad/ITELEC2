@@ -3,8 +3,6 @@ package com.example.march182023;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.refresh:
                 DialogFragment dialogFragment= new DialogFragment();
-                dialogFragment.show(getSupportFragmentManager(),"My Fragment");
+                dialogFragment.show(getSupportFragmentManager(), "My Fragment");
                 break;
             case R.id.copy:
                 Toast.makeText(this, "Copy Clicked", Toast.LENGTH_SHORT).show();
