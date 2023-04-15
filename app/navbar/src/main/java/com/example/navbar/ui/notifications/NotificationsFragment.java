@@ -1,5 +1,6 @@
 package com.example.navbar.ui.notifications;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,17 +20,13 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.navbar.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
-
     TextView textView;
-
-
     private FragmentNotificationsBinding binding;
-    IntentFilter intentFilter;
-
+    IntentFilter intentfilter;
     int deviceHealth;
-
     String currentBatteryHealth = "Battery Health";
-    int Batterylevel;
+    int batterylevel;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,56 +40,55 @@ public class NotificationsFragment extends Fragment {
         final Button checkStatus = binding.buttonCheck;
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-
+        intentfilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         checkStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().registerReceiver(broadcastReceiver, intentFilter);
+
+                getActivity().registerReceiver(broadcastReceiver, intentfilter);
             }
         });
         return root;
     }
-
-    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @SuppressLint("SetTextI18n")
         @Override
         public void onReceive(Context context, Intent intent) {
-            deviceHealth = Intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0);
-
-            if (deviceHealth == BatteryManager.BATTERY_HEALTH_COLD) {
-                textView.setText(currentBatteryHealth + " =Cold");
+            deviceHealth = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0);
+            if(deviceHealth == BatteryManager.BATTERY_HEALTH_COLD)
+            {
+                textView.setText(currentBatteryHealth + "= Cold");
             }
-
-            if (deviceHealth == BatteryManager.BATTERY_HEALTH_DEAD) {
-                textView.setText(currentBatteryHealth + " =Dead");
+            if(deviceHealth == BatteryManager.BATTERY_HEALTH_DEAD)
+            {
+                textView.setText(currentBatteryHealth + "= Dead");
             }
-
-            if (deviceHealth == BatteryManager.BATTERY_HEALTH_GOOD) {
-                textView.setText(currentBatteryHealth + " =Good");
+            if(deviceHealth == BatteryManager.BATTERY_HEALTH_GOOD)
+            {
+                textView.setText(currentBatteryHealth + "= Good");
             }
-
-            if (deviceHealth == BatteryManager.BATTERY_HEALTH_OVERHEAT) {
-                textView.setText(currentBatteryHealth + " =Overheat");
+            if(deviceHealth == BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE)
+            {
+                textView.setText(currentBatteryHealth + "= Over Voltage");
             }
-
-            if (deviceHealth == BatteryManager.BATTERY_HEALTH_OVER_VOLTAGE) {
-                textView.setText(currentBatteryHealth + " =Over voltage");
+            if(deviceHealth == BatteryManager.BATTERY_HEALTH_OVERHEAT)
+            {
+                textView.setText(currentBatteryHealth + "= Over Heat");
             }
-
-            if (deviceHealth == BatteryManager.BATTERY_HEALTH_UNKNOWN) {
-                textView.setText(currentBatteryHealth + " =Unknown");
+            if(deviceHealth == BatteryManager.BATTERY_HEALTH_UNKNOWN)
+            {
+                textView.setText(currentBatteryHealth + "= Unknown");
             }
-
-            if (deviceHealth == BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE) {
-                textView.setText(currentBatteryHealth + " =Unspecified Failure");
+            if(deviceHealth == BatteryManager.BATTERY_HEALTH_UNSPECIFIED_FAILURE)
+            {
+                textView.setText(currentBatteryHealth + "= Unexpected Failure");
             }
         }
     };
-
-
     @Override
-    public void OnDestroyView(){
-        super.OnDestroyView();
-        binding=null;
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
+
 }
