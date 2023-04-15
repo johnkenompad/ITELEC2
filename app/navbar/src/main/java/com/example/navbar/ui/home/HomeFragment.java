@@ -31,12 +31,10 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         final Button buttonGoToSecond = binding.buttonGotoSecond;
 
-        buttonGoToSecond.setOnClickListener(n
-                ew View.OnClickListener() {
+        buttonGoToSecond.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SecondActivity.class);
-                Intent.putExtra("Pass_Me","Hi I'm from main Activity!!!");
                 startActivity(intent);
             }
         });
